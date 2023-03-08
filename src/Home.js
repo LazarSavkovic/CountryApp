@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import CountryCard from './CountryCard';
 import Header from './Header';
 import CountryDetails from './CountryDetails';
+import './Home.css';
 
 export default function Home() {
   const url = `https://restcountries.com/v2/all`;
@@ -54,25 +55,21 @@ export default function Home() {
         handleChange={handleChange}
         input={input}
       />
-      <Routes>
-        <Route path="/countries/:country" component={<CountryDetails />} />
-        <Route path="/">
-          <div className="list">
-            {filteredCountries.map((country) => (
-              <div key={country.alpha3Code}>
-                <CountryCard
-                  name={country.name}
-                  population={country.population}
-                  region={country.region}
-                  capital={country.capital}
-                  flag={country.flag}
-                  onClick={clickCard}
-                />
-              </div>
-            ))}
+
+      <div className="list">
+        {filteredCountries.map((country) => (
+          <div key={country.alpha3Code}>
+            <CountryCard
+              name={country.name}
+              population={country.population}
+              region={country.region}
+              capital={country.capital}
+              flag={country.flag}
+              alpha={country.alpha3Code}
+            />
           </div>
-        </Route>
-      </Routes>
+        ))}
+      </div>
     </>
   );
 }

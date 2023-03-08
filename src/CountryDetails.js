@@ -1,33 +1,40 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 function CountryDetails() {
-  const { alpha3Code } = useParams();
-  const [country, setCountry] = useState(null);
+  const [countryData, setCountryData] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
-    async function fetchCountry() {
-      const response = await axios.get(
-        `https://restcountries.com/v2/alpha/${alpha3Code}`,
-      );
-      setCountry(response.data);
-    }
-
-    fetchCountry();
-  }, [alpha3Code]);
+    console.log(id);
+    fetch(`https://restcountries.com/v2/alpha/${id}`)
+      .then((response) => response.json())
+      .then((data) => setCountryData(data));
+  }, []);
 
   return (
-    <div>
-      <h1>{country.name}</h1>
-      <img src={country.flag} alt={`${country.name} flag`} />
-      <p>Population: {country.population}</p>
-      <p>Region: {country.region}</p>
-      <p>Capital: {country.capital}</p>
-      <p>Area: {country.area}</p>
-      <p>Subregion: {country.subregion}</p>
-      <p>Borders: {country.borders.join(', ')}</p>
-    </div>
+    <>
+      {countryData && (
+        <div>
+          <h1>{countryData.name}</h1>
+          <img src={countryData.flag} alt={`${countryData.name} flag`} />
+          <p>Population: {countryData.population}</p>
+          <p>Region: {countryData.region}</p>
+          <p>Capital: {countryData.capital}</p>
+          <p>Area: {countryData.area}</p>
+          <p>Subregion: {countryData.subregion}</p>
+
+          <ul>
+            Borders:
+            {countryData.borders.map((code) => (
+              <li key={code}>
+                <Link to={`/${code}`}> {code}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </>
   );
 }
 
