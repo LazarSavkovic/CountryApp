@@ -1,11 +1,7 @@
 import axios from 'axios';
-
-import { Route, Routes } from 'react-router-dom';
-
 import React, { useEffect, useState } from 'react';
 import CountryCard from './CountryCard';
 import Header from './Header';
-import CountryDetails from './CountryDetails';
 import './Home.css';
 
 export default function Home() {
@@ -50,6 +46,7 @@ export default function Home() {
 
   return (
     <>
+    <h1 className='title'>Countries API</h1>
       <Header
         handleSelectChange={handleSelectChange}
         handleChange={handleChange}

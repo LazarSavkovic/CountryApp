@@ -3,6 +3,18 @@
   justify-content: space-between;
   flex-wrap: wrap;
   flex-direction: row;
+  width: 70%;
+  align-items: center;
+  /* border: 5px solid red; */
+  margin-top: 50px;
+}
 
-  margin-top: 100px;
+.title {
+  letter-spacing: 4px;
+}
+
+@media only screen and (max-width: 600px) {
+  .list {
+    width: 85%;
+  }
 }

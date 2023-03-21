@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import './CountryDetails.css'
 
 function CountryDetails() {
-  const [countryData, setCountryData] = useState(null);
+  const [countryData, setCountryData] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -10,31 +11,35 @@ function CountryDetails() {
     fetch(`https://restcountries.com/v2/alpha/${id}`)
       .then((response) => response.json())
       .then((data) => setCountryData(data));
-  }, []);
+  }, [id]);
 
   return (
-    <>
+    <div className='countryDetails'>
+
+<Link style={{ textDecoration: 'none' }}  to="/"><span className='homeLink'>Back to home</span> </Link>
       {countryData && (
-        <div>
+        <div className='detailsCard'>
           <h1>{countryData.name}</h1>
-          <img src={countryData.flag} alt={`${countryData.name} flag`} />
+          <div className='detailsImg'>
+            <img src={countryData.flag} alt={`${countryData.name} flag`} />
+          </div>
           <p>Population: {countryData.population}</p>
           <p>Region: {countryData.region}</p>
           <p>Capital: {countryData.capital}</p>
           <p>Area: {countryData.area}</p>
           <p>Subregion: {countryData.subregion}</p>
 
-          <ul>
-            Borders:
+          <div>
+            Borders: 
             {countryData.borders.map((code) => (
-              <li key={code}>
-                <Link to={`/${code}`}> {code}</Link>
-              </li>
+
+              <Link style={{ textDecoration: 'none' }} key={code} to={`/countries/${code}`}><span className='borderLink'>{code}</span> </Link>
+
             ))}
-          </ul>
+          </div>
         </div>
       )}
-    </>
+    </ div>
   );
 }
 
